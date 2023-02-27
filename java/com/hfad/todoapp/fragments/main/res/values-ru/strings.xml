@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title">Создавайте свои задачи</string>
+    <string name="description">Упростите планирование ваших повседневных задач и поручений. Всего за несколько шагов у вас все готово на целую неделю или месяц. Это зависит от вас.</string>
+    <string name="get_started">Начать</string>
+    <string name="well_done">ОТЛИЧНАЯ РАБОТА!</string>
+    <string name="welcome">ДОБРО ПОЖАЛОВАТЬ!</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+</resources>
