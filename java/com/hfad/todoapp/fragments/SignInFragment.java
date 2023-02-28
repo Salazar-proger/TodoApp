@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,11 +67,24 @@ public class SignInFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Login successful", Toast.LENGTH_SHORT).show();
                                 mNavController.navigate(R.id.action_signInFragment_to_homeFragment);
                             } else {
-                                Log.d("ERROR", "SigninProblem");
-                                Toast.makeText(getActivity(), "Email or password are incorrect", Toast.LENGTH_SHORT).show();
+                                binding.password.setError("Email or password are wrong");
+                                binding.password.requestFocus();
+                                return;
                             }
                         }
                     });
+                }
+
+                if(TextUtils.isEmpty(email)) {
+                    binding.email.setError("Email is required");
+                    binding.email.requestFocus();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(password)) {
+                    binding.password.setError("Password is required");
+                    binding.password.requestFocus();
+                    return;
                 }
             }
         });

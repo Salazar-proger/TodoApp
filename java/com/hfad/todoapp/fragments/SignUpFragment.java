@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hfad.todoapp.R;
 import com.hfad.todoapp.databinding.FragmentSignUpBinding;
 
@@ -63,13 +66,28 @@ public class SignUpFragment extends Fragment {
                                 Toast.makeText(getActivity(), "Registration successful", Toast.LENGTH_SHORT).show();
                                 mNavController.navigate(R.id.action_signUpFragment_to_homeFragment);
                                 FirebaseUser user = mAuth.getCurrentUser();
-                            } else {
-                                Log.d("ERROR", "Reg fail");
-                                Toast.makeText(getActivity(), "One of the fields is empty, " +
-                                        "or password and confirm password are not same", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
+                }
+
+
+                if(TextUtils.isEmpty(email)) {
+                    binding.emailReg.setError("Email is required");
+                    binding.emailReg.requestFocus();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(pass)) {
+                    binding.passwordReg.setError("Password must contain 6 character or more");
+                    binding.passwordReg.requestFocus();
+                    return;
+                }
+
+                if(TextUtils.isEmpty(confirmPass)) {
+                    binding.confirmPass.setError("Confirm password is not equal to password");
+                    binding.confirmPass.requestFocus();
+                    return;
                 }
             }
         });

@@ -2,7 +2,6 @@ package com.hfad.todoapp;
 
 
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     List<Task> taskList;
@@ -40,7 +42,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         Task task = taskList.get(position);
         holder.title.setText(task.getTitle());
         holder.description.setText(task.getDescription());
-        holder.deleteTask.setClickable(task.isChecked());
+        Date calendar = task.getDate();
+        if (calendar != null) {
+            holder.date.setVisibility(View.VISIBLE);
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.getDefault());
+            String dateStr = sdf.format(calendar.getTime());
+            holder.date.setText(dateStr);
+        } else {
+            holder.date.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -50,7 +60,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView title, description;
+        private TextView title, description, date;
         private ImageView deleteTask;
         private CheckBox checkTask;
 
@@ -59,15 +69,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
             title = itemView.findViewById(R.id.todoTitle);
             description = itemView.findViewById(R.id.todoDescription);
+            date = itemView.findViewById(R.id.date);
             deleteTask = itemView.findViewById(R.id.delete);
             checkTask = itemView.findViewById(R.id.check);
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            String userId = auth.getCurrentUser().getUid();
 
             deleteTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    FirebaseAuth auth = FirebaseAuth.getInstance();
-                    String userId = auth.getCurrentUser().getUid();
-
                     int position = getAdapterPosition();
                     String itemId = taskList.get(position).getId();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -87,9 +98,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             checkTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FirebaseAuth auth = FirebaseAuth.getInstance();
-                    String userId = auth.getCurrentUser().getUid();
-
                     int position = getAdapterPosition();
                     Task task = taskList.get(position);
                     task.setChecked(!task.isChecked());
@@ -104,7 +112,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                         }
                     });
 
-                    if(task.isChecked()) {
+                    if (task.isChecked()) {
                         title.setPaintFlags(title.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         description.setPaintFlags(description.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     } else {

@@ -42,7 +42,7 @@ public class SplashFragment extends Fragment {
         binding.navigate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isExist) {
+                if (isExist) {
                     mNavController.navigate(R.id.action_splashFragment_to_homeFragment);
                 } else {
                     mNavController.navigate(R.id.action_splashFragment_to_signInFragment);
