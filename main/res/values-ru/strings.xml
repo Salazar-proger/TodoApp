@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TodoApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title">Создавайте свои задачи</string>
+    <string name="description">Упростите планирование ваших повседневных задач и поручений. Всего за несколько шагов у вас все готово на целую неделю или месяц. Это зависит от вас.</string>
+    <string name="get_started">Начать</string>
+    <string name="well_done">ОТЛИЧНАЯ РАБОТА!</string>
+    <string name="welcome">ДОБРО ПОЖАЛОВАТЬ!</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+
+    <string name="save">Сохранить</string>
+    <string name="set_date">Уст. Дату</string>
+    <string name="enter_email">Введите email</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="don_t_have_an_account">нет аккаунта?</string>
+    <string name="you_are_about_to_register_now">зарегистрируйтесь прямо сейчас!.</string>
+    <string name="confirm_password">Подтвердить пароль</string>
+    <string name="already_have_an_account">уже есть аккаунт?</string>
+
+</resources>
